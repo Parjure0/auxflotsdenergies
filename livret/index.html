@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Livret — Aux Flo'ts d'Énergies</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <style>
+    :root {
+      --navy:       #0f2d4a;
+      --gold:       #c9a84c;
+      --gold-light: #e2c06a;
+      --cream:      #faf7f2;
+      --cream-dark: #f0ece3;
+      --teal:       #2a7f74;
+      --text-light: #64748b;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--navy);
+    }
+
+    /* ── HEADER ─────────────────────────────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(15, 45, 74, .97);
+      padding: 1rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 16px rgba(0,0,0,.3);
+    }
+    .header-logo { text-decoration: none; line-height: 1.1; }
+    .header-logo span:first-child {
+      display: block; font-family: 'Cormorant Garamond', serif;
+      color: var(--gold); font-size: 1.35rem; font-weight: 700;
+    }
+    .header-logo span:last-child {
+      display: block; font-family: 'Cormorant Garamond', serif;
+      color: rgba(255,255,255,.5); font-size: .85rem; font-weight: 300; letter-spacing: .1em;
+    }
+    .header-title {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold); font-size: 1.2rem; font-weight: 600; letter-spacing: .08em;
+    }
+    .btn-dl {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy); font-family: 'Lato', sans-serif; font-weight: 700;
+      font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+      padding: .6rem 1.2rem; border-radius: 50px; border: none;
+      text-decoration: none; cursor: pointer;
+      transition: transform .2s, box-shadow .2s; white-space: nowrap;
+    }
+    .btn-dl:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,168,76,.4); }
+
+    /* ── PDF VIEWER ──────────────────────────────────────────────────── */
+    #pdf-viewer {
+      max-width: 900px; margin: 0 auto; padding: 2rem 1rem;
+    }
+    #pdf-pages canvas {
+      display: block; max-width: 100%; margin: 0 auto 1rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(15,45,74,.12);
+    }
+    #pdf-loading {
+      text-align: center; padding: 5rem 2rem; color: var(--text-light);
+    }
+    .loader-ring {
+      display: inline-block; width: 48px; height: 48px;
+      border: 4px solid var(--cream-dark);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin .9s linear infinite;
+      margin-bottom: 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #pdf-error {
+      display: none; text-align: center; padding: 3rem 2rem;
+      background: #fee2e2; border-radius: 12px; margin: 2rem auto;
+      max-width: 480px; color: #991b1b;
+    }
+
+    /* ── QR SECTION ──────────────────────────────────────────────────── */
+    #qr-section {
+      background: #fff; padding: 5rem 2rem; text-align: center;
+      border-top: 2px solid var(--cream-dark);
+    }
+    .qr-tag {
+      color: var(--gold); font-size: .82rem; letter-spacing: .22em;
+      text-transform: uppercase; margin-bottom: .5rem;
+    }
+    .qr-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; color: var(--navy); font-weight: 600;
+    }
+    .gold-line { display: block; width: 60px; height: 2px; background: var(--gold); margin: .9rem auto 1.5rem; }
+    .qr-sub { color: var(--text-light); font-size: .98rem; margin-bottom: 2rem; font-weight: 300; }
+    #qrcode {
+      display: inline-block;
+      padding: 1.5rem; background: #fff; border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(15,45,74,.1);
+      border: 2px solid var(--cream-dark);
+      margin-bottom: 1.8rem;
+    }
+    .btn-gold {
+      display: inline-block; cursor: pointer;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy); font-family: 'Lato', sans-serif; font-weight: 700;
+      font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+      padding: .9rem 2rem; border-radius: 50px; border: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,.4); }
+    .qr-hint { margin-top: 1rem; font-size: .82rem; color: var(--text-light); }
+
+    /* ── FOOTER ──────────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,.45);
+      text-align: center; padding: 2rem; font-size: .85rem;
+    }
+    .footer-name {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold); font-size: 1.2rem; margin-bottom: .3rem;
+    }
+    footer a { color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--gold); }
+
+    @media (max-width: 600px) {
+      .header-title { display: none; }
+      header { padding: .8rem 1.2rem; }
+      #pdf-viewer { padding: 1rem .4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ───────────────────────────────────────────────────────── -->
+  <header>
+    <a href="/" class="header-logo">
+      <span>Aux Flo'ts</span>
+      <span>d'Énergies</span>
+    </a>
+    <span class="header-title">Mon Livret</span>
+    <a href="../LIVRET.pdf" download="Livret-Aux-Flots-dEnergies.pdf" class="btn-dl">
+      ⬇ Télécharger
+    </a>
+  </header>
+
+  <!-- ── PDF VIEWER ───────────────────────────────────────────────────── -->
+  <main id="pdf-viewer">
+    <div id="pdf-loading">
+      <div class="loader-ring"></div>
+      <p>Chargement du livret…</p>
+    </div>
+    <div id="pdf-error">
+      <p style="font-size:1.5rem; margin-bottom:.8rem;">⚠️</p>
+      <p style="font-weight:700; margin-bottom:.5rem;">Impossible de charger le livret.</p>
+      <p style="font-size:.9rem; margin-bottom:1.2rem;">Vérifiez votre connexion ou téléchargez le fichier.</p>
+      <a href="../LIVRET.pdf" download="Livret-Aux-Flots-dEnergies.pdf"
+        style="display:inline-block; background:#dc2626; color:#fff; padding:.7rem 1.6rem; border-radius:50px; font-weight:700; font-size:.85rem; text-decoration:none;">
+        ⬇ Télécharger le PDF
+      </a>
+    </div>
+    <div id="pdf-pages"></div>
+  </main>
+
+  <!-- ── QR CODE ──────────────────────────────────────────────────────── -->
+  <section id="qr-section">
+    <p class="qr-tag">Partager</p>
+    <h2 class="qr-title">QR Code du livret</h2>
+    <span class="gold-line"></span>
+    <p class="qr-sub">Scannez pour accéder à ce livret depuis n'importe quel appareil</p>
+    <div>
+      <div id="qrcode"></div>
+    </div>
+    <button onclick="downloadQR()" class="btn-gold">⬇ Télécharger le QR Code (image)</button>
+    <p class="qr-hint">Format PNG · Prêt à imprimer</p>
+  </section>
+
+  <!-- ── FOOTER ───────────────────────────────────────────────────────── -->
+  <footer>
+    <p class="footer-name">Aux Flo'ts d'Énergies</p>
+    <p>© 2026 Florence Atangana — Médium · Magnétiseuse Énergéticienne &nbsp;·&nbsp; <a href="/">← Retour au site</a></p>
+  </footer>
+
+  <script>
+    // ── PDF.js ────────────────────────────────────────────────────────────
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    (async function loadPDF() {
+      const loadingEl = document.getElementById('pdf-loading');
+      const errorEl   = document.getElementById('pdf-error');
+      const pagesEl   = document.getElementById('pdf-pages');
+      const viewerEl  = document.getElementById('pdf-viewer');
+
+      try {
+        const pdf = await pdfjsLib.getDocument('../LIVRET.pdf').promise;
+        loadingEl.style.display = 'none';
+
+        const dpr = window.devicePixelRatio || 1;
+
+        for (let i = 1; i <= pdf.numPages; i++) {
+          const page  = await pdf.getPage(i);
+          const raw   = page.getViewport({ scale: 1 });
+          const maxW  = Math.min(viewerEl.clientWidth - 24, 860);
+          const scale = (maxW / raw.width) * dpr;
+          const vp    = page.getViewport({ scale });
+
+          const canvas         = document.createElement('canvas');
+          canvas.width         = vp.width;
+          canvas.height        = vp.height;
+          canvas.style.width   = (vp.width  / dpr) + 'px';
+          canvas.style.height  = (vp.height / dpr) + 'px';
+
+          pagesEl.appendChild(canvas);
+          await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
+        }
+      } catch (err) {
+        loadingEl.style.display = 'none';
+        errorEl.style.display   = 'block';
+        console.error(err);
+      }
+    })();
+
+    // ── QR Code ───────────────────────────────────────────────────────────
+    new QRCode(document.getElementById('qrcode'), {
+      text:         'https://auxflotsdenergies.fr/livret',
+      width:        220,
+      height:       220,
+      colorDark:    '#0f2d4a',
+      colorLight:   '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H,
+    });
+
+    function downloadQR() {
+      const canvas = document.querySelector('#qrcode canvas');
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.download = 'qrcode-livret-auxflotsdenergies.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  </script>
+</body>
+</html>

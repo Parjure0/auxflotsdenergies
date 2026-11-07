@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aux Flo'ts d'Énergies — Médium · Magnétiseuse Énergéticienne à Benet (85)</title>
+  <meta name="description" content="Florence Atangana, médium et magnétiseuse énergéticienne à Benet (Vendée). Séances de médiumnité, guidance et magnétisme pour retrouver clarté et équilibre. Lun–Sam 13h–20h.">
+  <meta name="keywords" content="médium Vendée, médiumnité Benet, magnétiseuse Benet, guidance médiumnité, énergéticienne Vendée, magnétisme Benet 85, soins énergétiques Vendée, bien-être Benet, Florence Atangana">
+  <link rel="canonical" href="https://www.auxflotsdenergies.fr/">
+  <link rel="icon" href="favicon.png" type="image/png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aux Flo'ts d'Énergies — Médium · Magnétiseuse à Benet (85)">
+  <meta property="og:description" content="Médium et magnétiseuse énergéticienne à Benet. Séances de médiumnité, guidance et soins énergétiques avec Florence Atangana.">
+  <meta property="og:url" content="https://www.auxflotsdenergies.fr/">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Données structurées Google (LocalBusiness) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HealthAndBeautyBusiness",
+    "name": "Aux Flo'ts d'Énergies",
+    "description": "Médium et magnétiseuse énergéticienne à Benet (Vendée). Séances de médiumnité, guidance et magnétisme pour retrouver clarté et équilibre.",
+    "url": "https://www.auxflotsdenergies.fr/",
+    "telephone": "+33665581236",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "251 Route du Mazeau",
+      "addressLocality": "Benet",
+      "postalCode": "85490",
+      "addressCountry": "FR"
+    },
+    "openingHours": ["Mo-Sa 13:00-20:00"],
+    "priceRange": "20€–90€",
+    "image": "favicon.png",
+    "sameAs": ["https://www.facebook.com/p/Aux-Flots-dEnergies-100065381443004/"]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --navy:       #0f2d4a;
+      --navy-light: #1a4a6e;
+      --gold:       #c9a84c;
+      --gold-light: #e2c06a;
+      --teal:       #2a7f74;
+      --cream:      #faf7f2;
+      --cream-dark: #f0ece3;
+      --text:       #2c3e50;
+      --text-light: #64748b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    h1, h2, h3, h4, .heading { font-family: 'Cormorant Garamond', serif; }
+
+    /* ── NAVBAR ─────────────────────────────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .35s, box-shadow .35s;
+    }
+    #navbar.scrolled {
+      background: rgba(15, 45, 74, .97);
+      box-shadow: 0 2px 24px rgba(0,0,0,.25);
+    }
+    .nav-logo { text-decoration: none; line-height: 1.1; }
+    .nav-logo span:first-child {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--gold); font-size: 1.55rem; font-weight: 700;
+    }
+    .nav-logo span:last-child {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      color: rgba(255,255,255,.65); font-size: .95rem; font-weight: 300; letter-spacing: .1em;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 1.5rem; }
+    .btn-pro {
+      background: none; border: none; cursor: pointer;
+      color: rgba(255,255,255,.35); font-family: 'Lato', sans-serif;
+      font-size: .75rem; letter-spacing: .1em; transition: color .2s;
+    }
+    .btn-pro:hover { color: rgba(255,255,255,.65); }
+
+    /* ── BUTTONS ────────────────────────────────────────────────────────── */
+    .btn-gold {
+      display: inline-block; cursor: pointer;
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy); font-family: 'Lato', sans-serif; font-weight: 700;
+      font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+      padding: .9rem 2rem; border-radius: 50px; border: none;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,.4); }
+    .btn-gold:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .btn-outline {
+      display: inline-block; cursor: pointer;
+      background: transparent; border: 2px solid var(--gold); color: var(--gold);
+      font-family: 'Lato', sans-serif; font-weight: 700;
+      font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+      padding: .8rem 1.8rem; border-radius: 50px; transition: all .2s;
+    }
+    .btn-outline:hover { background: var(--gold); color: var(--navy); }
+
+    .btn-plain {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Lato', sans-serif; font-size: .9rem;
+      color: var(--text-light); text-decoration: underline;
+    }
+
+    /* ── HERO ───────────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #081c2e 0%, #0f2d4a 45%, #1a4a5e 72%, #2a7f74 100%);
+      position: relative; overflow: hidden; display: flex; align-items: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,.1) 0%, transparent 65%);
+    }
+    .particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .particle {
+      position: absolute; border-radius: 50%;
+      background: rgba(201,168,76,.45);
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(105vh); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: .4; }
+      100% { transform: translateY(-10vh) translateX(15px); opacity: 0; }
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem; padding-top: 6rem;
+    }
+    .hero-inner { max-width: 680px; }
+    .hero-tag {
+      color: var(--gold); font-size: .85rem; letter-spacing: .22em;
+      text-transform: uppercase; font-weight: 300; margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 5.5rem); color: #fff;
+      font-weight: 600; line-height: 1.03; margin-bottom: .4rem;
+    }
+    .hero-title em { color: var(--gold); font-style: normal; font-weight: 700; }
+    .hero-name { color: rgba(255,255,255,.6); font-size: 1.2rem; letter-spacing: .1em; font-weight: 300; }
+    .gold-sep { width: 60px; height: 2px; background: var(--gold); margin: 1.5rem 0; }
+    .hero-desc {
+      color: rgba(255,255,255,.75); font-size: 1.08rem; line-height: 1.75;
+      max-width: 500px; margin-bottom: 2.5rem; font-weight: 300;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-meta { color: rgba(255,255,255,.4); font-size: .82rem; margin-top: 1.5rem; }
+    .wave-bottom { position: absolute; bottom: -1px; left: 0; right: 0; }
+
+    /* ── SECTIONS ───────────────────────────────────────────────────────── */
+    .section { padding: 6rem 2rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+    .section-tag {
+      color: var(--gold); font-size: .82rem; letter-spacing: .22em;
+      text-transform: uppercase; margin-bottom: .5rem;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem); color: var(--navy); font-weight: 600;
+    }
+    .gold-line { display: block; width: 60px; height: 2px; background: var(--gold); margin: 1rem auto; }
+    .section-sub { color: var(--text-light); font-size: 1.05rem; font-weight: 300; }
+
+    /* ── SERVICE CARDS ──────────────────────────────────────────────────── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;
+    }
+    .service-card {
+      background: #fff; border-radius: 20px; padding: 2.5rem 2rem;
+      text-align: center; cursor: pointer;
+      box-shadow: 0 10px 40px rgba(15,45,74,.07);
+      border: 2px solid transparent;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card:hover, .service-card.selected {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(15,45,74,.14);
+      border-color: var(--gold);
+    }
+    .service-icon { font-size: 2.8rem; margin-bottom: 1rem; display: block; }
+    .service-name { font-size: 1.6rem; color: var(--navy); font-weight: 600; margin-bottom: .2rem; }
+    .service-dur  { color: var(--text-light); font-size: .88rem; margin-bottom: 1.25rem; }
+    .service-price { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 700; color: var(--navy); line-height: 1; }
+    .service-price sup { font-size: 1.4rem; color: var(--gold); vertical-align: super; }
+    .service-desc { color: var(--text-light); font-size: .88rem; line-height: 1.65; margin: 1rem 0 1.8rem; }
+    .service-name-sub { font-size: 1rem; color: var(--teal); font-weight: 400; margin-bottom: 1rem; font-style: italic; }
+    .price-tiers { margin: 1rem 0 1.5rem; display: flex; flex-direction: column; gap: .75rem; }
+    .price-tier { background: var(--cream); border-radius: 10px; padding: .75rem 1rem; text-align: left; border-left: 3px solid var(--gold); }
+    .tier-label { display: block; font-weight: 700; color: var(--navy); font-size: .9rem; }
+    .tier-price { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); line-height: 1.2; }
+    .tier-note { display: block; font-size: .78rem; color: var(--text-light); margin-top: .2rem; line-height: 1.4; }
+    .badge-pop {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--gold); color: var(--navy);
+      font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+      padding: .28rem .75rem; border-radius: 50px;
+    }
+
+    /* ── TESTIMONIALS ───────────────────────────────────────────────────── */
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem;
+    }
+    .review-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(201,168,76,.2);
+      border-radius: 16px; padding: 1.8rem; position: relative;
+    }
+    .review-stars { color: var(--gold); font-size: .95rem; margin-bottom: .8rem; letter-spacing: .15em; }
+    .review-text {
+      color: rgba(255,255,255,.8); font-size: .9rem; line-height: 1.75;
+      margin-bottom: 1.2rem; font-style: italic;
+    }
+    .review-author { color: var(--gold); font-weight: 700; font-size: .85rem; letter-spacing: .05em; }
+    .review-quote {
+      position: absolute; top: 1rem; right: 1.2rem;
+      font-size: 3.5rem; color: rgba(201,168,76,.12);
+      font-family: 'Cormorant Garamond', serif; line-height: 1;
+    }
+
+    /* ── BOOKING ────────────────────────────────────────────────────────── */
+    .booking-wrapper { max-width: 860px; margin: 0 auto; }
+
+    /* Step indicator */
+    .steps { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 2.5rem; }
+    .step-dot {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .88rem; font-weight: 700; font-family: 'Lato', sans-serif;
+      transition: all .3s; flex-shrink: 0;
+    }
+    .step-dot.active    { background: var(--gold); color: var(--navy); }
+    .step-dot.done      { background: var(--teal); color: #fff; }
+    .step-dot.pending   { background: #e2e8f0; color: #94a3b8; }
+    .step-line { height: 2px; width: 56px; background: #e2e8f0; flex-shrink: 0; transition: background .3s; }
+    .step-line.done { background: var(--teal); }
+
+    /* Step content */
+    .step-panel { animation: fadeIn .25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .step-title { font-size: 1.8rem; color: var(--navy); font-weight: 600; text-align: center; margin-bottom: .4rem; }
+    .step-sub { color: var(--text-light); font-size: .95rem; text-align: center; margin-bottom: 2rem; }
+
+    /* Calendar */
+    .calendar {
+      background: #fff; border-radius: 16px; padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(15,45,74,.08);
+      max-width: 390px; margin: 0 auto;
+    }
+    .cal-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;
+    }
+    .cal-nav {
+      background: none; border: none; cursor: pointer;
+      color: var(--navy); font-size: 1.3rem;
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+    }
+    .cal-nav:hover { background: var(--cream-dark); }
+    .cal-month-label { font-size: 1.2rem; color: var(--navy); font-weight: 600; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .cal-dname {
+      text-align: center; font-size: .72rem; font-weight: 700;
+      color: var(--text-light); padding: .4rem 0;
+      text-transform: uppercase; letter-spacing: .05em;
+    }
+    .cal-day {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; font-size: .88rem; cursor: pointer;
+      border: 2px solid transparent; transition: all .18s; user-select: none;
+    }
+    .cal-day.avail:hover { background: var(--cream-dark); }
+    .cal-day.today { border-color: var(--gold); font-weight: 700; }
+    .cal-day.chosen { background: var(--navy) !important; color: #fff !important; border-color: var(--navy); }
+    .cal-day.off    { color: #cbd5e1; cursor: not-allowed; text-decoration: line-through; }
+    .cal-day.empty  { cursor: default; }
+
+    /* Time slots */
+    .slots-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+      gap: .65rem; max-width: 580px; margin: 0 auto;
+    }
+    .slot {
+      padding: .6rem .5rem; border-radius: 8px;
+      border: 2px solid #e2e8f0; cursor: pointer; transition: all .18s;
+      font-size: .9rem; text-align: center; background: #fff; font-weight: 600;
+    }
+    .slot:hover  { border-color: var(--gold); background: #fffbeb; }
+    .slot.chosen { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+    /* Form */
+    .form-group { margin-bottom: 1.2rem; }
+    .form-label {
+      display: block; font-size: .8rem; font-weight: 700;
+      color: var(--navy); margin-bottom: .4rem;
+      text-transform: uppercase; letter-spacing: .08em;
+    }
+    .form-input {
+      width: 100%; padding: .85rem 1rem;
+      border: 2px solid #e2e8f0; border-radius: 10px;
+      font-family: 'Lato', sans-serif; font-size: 1rem; color: var(--text);
+      transition: border-color .2s; background: #fff;
+    }
+    .form-input:focus { outline: none; border-color: var(--gold); }
+
+    /* Recap box */
+    .recap {
+      background: var(--cream); border-radius: 14px; padding: 1.4rem;
+      max-width: 480px; margin: 0 auto 2rem;
+    }
+    .recap-title { font-size: 1.15rem; color: var(--navy); font-weight: 600; margin-bottom: .9rem; }
+    .recap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem; font-size: .9rem; }
+    .recap-grid .lbl { color: var(--text-light); }
+    .recap-grid .val { font-weight: 600; color: var(--navy); }
+    .recap-grid .val.price { color: var(--gold); font-size: 1.1rem; font-weight: 700; }
+
+    /* Alert */
+    .alert {
+      padding: .9rem 1rem; border-radius: 10px; font-size: .88rem; margin-bottom: 1rem;
+    }
+    .alert-err { background: #fee2e2; color: #991b1b; }
+    .alert-ok  { background: #dcfce7; color: #166534; }
+
+    /* Step actions */
+    .step-actions { display: flex; justify-content: center; margin-top: 1.8rem; }
+    .step-back    { display: flex; gap: 1rem; align-items: center; margin-top: 2rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── CONTACT ────────────────────────────────────────────────────────── */
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem; max-width: 660px; margin: 0 auto;
+    }
+    .contact-card {
+      background: #fff; border-radius: 20px; padding: 2rem;
+      text-align: center; box-shadow: 0 8px 30px rgba(15,45,74,.07);
+    }
+    .contact-icon { font-size: 2.4rem; margin-bottom: 1rem; }
+    .contact-name { font-size: 1.25rem; color: var(--navy); font-weight: 600; margin-bottom: .5rem; }
+
+    /* ── FOOTER ─────────────────────────────────────────────────────────── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,.45);
+      text-align: center; padding: 2.5rem 2rem; font-size: .85rem;
+    }
+    footer .footer-name {
+      font-family: 'Cormorant Garamond', serif; color: var(--gold);
+      font-size: 1.3rem; margin-bottom: .4rem;
+    }
+
+    /* ── NOTIFICATION ────────────────────────────────────────────────────── */
+    #notif {
+      display: none; position: fixed; top: 84px; left: 50%;
+      transform: translateX(-50%); z-index: 300;
+      padding: 1rem 2rem; border-radius: 12px; font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18); max-width: 90vw; text-align: center;
+    }
+
+    /* ── ADMIN ───────────────────────────────────────────────────────────── */
+    #admin-overlay {
+      display: none; position: fixed; inset: 0; z-index: 1000;
+      background: rgba(15,45,74,.85); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .admin-panel {
+      background: #fff; border-radius: 20px;
+      width: 100%; max-width: 920px; max-height: 90vh; overflow-y: auto;
+      padding: 2.5rem;
+    }
+    .admin-header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;
+    }
+    .admin-title { font-size: 2rem; color: var(--navy); font-weight: 600; }
+    .admin-header-actions { display: flex; gap: 1rem; align-items: center; }
+    .btn-close {
+      background: none; border: 2px solid #e2e8f0; border-radius: 50%;
+      width: 36px; height: 36px; cursor: pointer; font-size: 1.3rem;
+      color: var(--text-light); display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .btn-close:hover { border-color: #94a3b8; color: var(--text); }
+    .tabs { display: flex; gap: .75rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .tab {
+      padding: .6rem 1.4rem; border-radius: 50px; font-weight: 700;
+      font-family: 'Lato', sans-serif; font-size: .82rem; letter-spacing: .05em;
+      border: 2px solid #e2e8f0; cursor: pointer; transition: all .2s;
+      background: #fff; color: var(--text-light);
+    }
+    .tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+    /* Appointment row */
+    .appt-row {
+      background: var(--cream); border-radius: 12px; padding: 1.2rem;
+      margin-bottom: .6rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;
+    }
+    .appt-client { flex: 1; min-width: 180px; }
+    .appt-client-name { font-weight: 700; color: var(--navy); font-size: 1rem; }
+    .appt-client-contact { color: var(--text-light); font-size: .82rem; margin-top: .15rem; }
+    .appt-info { flex: 1; min-width: 140px; }
+    .appt-date { font-weight: 600; color: var(--navy); }
+    .appt-details { color: var(--text-light); font-size: .85rem; }
+    .appt-price { color: var(--gold); font-weight: 700; font-size: .88rem; }
+    .appt-actions { display: flex; flex-direction: column; align-items: flex-end; gap: .5rem; }
+    .badge {
+      padding: .22rem .7rem; border-radius: 50px;
+      font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    }
+    .badge-confirmed { background: #dcfce7; color: #166534; }
+    .badge-pending   { background: #fef9c3; color: #854d0e; }
+    .badge-cancelled { background: #fee2e2; color: #991b1b; }
+    .btn-cancel {
+      background: none; border: 1px solid #fca5a5; color: #dc2626;
+      border-radius: 6px; padding: .24rem .7rem; cursor: pointer;
+      font-size: .78rem; font-family: 'Lato', sans-serif; transition: all .2s;
+    }
+    .btn-cancel:hover { background: #fee2e2; }
+
+    /* Blocked dates */
+    .blocked-form { display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 2rem; }
+    .blocked-form .form-group { margin: 0; flex: 1; min-width: 140px; }
+    .blocked-row {
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px;
+      padding: .9rem 1.1rem; margin-bottom: .5rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .blocked-row-date { font-weight: 700; color: var(--navy); }
+    .blocked-row-reason { color: var(--text-light); font-size: .82rem; }
+    .btn-unblock {
+      background: none; border: 1px solid #dc3545; color: #dc3545;
+      border-radius: 6px; padding: .28rem .7rem; cursor: pointer;
+      font-size: .8rem; font-family: 'Lato', sans-serif; transition: all .2s; white-space: nowrap;
+    }
+    .btn-unblock:hover { background: #fee2e2; }
+
+    .empty-state { text-align: center; padding: 3rem 1rem; color: var(--text-light); }
+    .empty-state .emoji { font-size: 3rem; margin-bottom: 1rem; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* ── POLICY NOTICE ──────────────────────────────────────────────────── */
+    .policy-notice {
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px;
+      padding: .9rem 1.1rem; font-size: .85rem; color: #78350f;
+      margin: 0 auto 1.2rem; max-width: 480px; line-height: 1.6;
+    }
+
+    /* ── REFUND BUTTON ──────────────────────────────────────────────────── */
+    .btn-refund {
+      background: none; border: 1px solid #fca5a5; color: #dc2626;
+      border-radius: 6px; padding: .28rem .7rem; cursor: pointer;
+      font-size: .78rem; font-family: 'Lato', sans-serif; transition: all .2s;
+      white-space: nowrap;
+    }
+    .btn-refund:hover { background: #fee2e2; }
+    .refund-confirm {
+      background: #fff5f5; border: 1px solid #fca5a5; border-radius: 10px;
+      padding: .9rem 1rem; margin-top: .6rem; min-width: 220px;
+    }
+    .refund-confirm-label { font-size: .78rem; color: #991b1b; margin-bottom: .4rem; }
+    .btn-refund-confirm {
+      background: #dc2626; color: #fff; border: none; border-radius: 6px;
+      padding: .35rem .9rem; cursor: pointer; font-size: .8rem;
+      font-family: 'Lato', sans-serif; font-weight: 700; transition: background .2s;
+    }
+    .btn-refund-confirm:hover:not(:disabled) { background: #b91c1c; }
+    .btn-refund-confirm:disabled { opacity: .5; cursor: not-allowed; }
+
+    /* ── FOOTER LEGAL BAR ───────────────────────────────────────────────── */
+    .footer-legal {
+      margin-top: 1.2rem; padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,.1);
+      font-size: .78rem; display: flex; gap: 1rem;
+      align-items: center; justify-content: center; flex-wrap: wrap;
+    }
+    .footer-legal a { color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+    .footer-legal a:hover { color: var(--gold); }
+    .footer-legal span { color: rgba(255,255,255,.2); }
+
+    @media (max-width: 600px) {
+      .admin-panel { padding: 1.5rem; }
+      .booking-wrapper .step-title { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAVBAR ─────────────────────────────────────────────────────────── -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      <span>Aux Flo'ts</span>
+      <span>d'Énergies</span>
+    </a>
+    <div class="nav-actions">
+      <a href="#reservation" class="btn-gold" style="padding:.7rem 1.5rem; font-size:.78rem;">Réserver</a>
+      <button class="btn-pro" onclick="openAdmin()">Espace pro</button>
+    </div>
+  </nav>
+
+  <!-- ── NOTIFICATION ────────────────────────────────────────────────────── -->
+  <div id="notif"></div>
+
+  <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="particles" id="particles"></div>
+    <div class="hero-content">
+      <div class="hero-inner">
+        <p class="hero-tag">✦ Médium · Magnétiseuse Énergéticienne ✦</p>
+        <h1 class="hero-title">
+          Aux Flo'ts<br>
+          <em>d'Énergies</em>
+        </h1>
+        <p class="hero-name">Florence Atangana</p>
+        <div class="gold-sep"></div>
+        <p class="hero-desc">
+          Libérez les blocages énergétiques, retrouvez équilibre et vitalité grâce
+          à des séances de magnétisme personnalisées et bienveillantes.
+        </p>
+        <div class="hero-ctas">
+          <a href="#reservation" class="btn-gold">Prendre rendez-vous</a>
+          <a href="#services" class="btn-outline">Découvrir les soins</a>
+        </div>
+        <p class="hero-meta">📍 Benet (85) &nbsp;·&nbsp; Lun–Sam 13h–20h</p>
+      </div>
+    </div>
+    <svg class="wave-bottom" viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,36 C360,72 1080,0 1440,36 L1440,72 L0,72 Z" fill="#faf7f2"/>
+    </svg>
+  </section>
+
+  <!-- ── SERVICES ───────────────────────────────────────────────────────── -->
+  <section id="services" class="section" style="background: var(--cream);">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-tag">Ce que je propose</p>
+        <h2 class="section-title heading">Mes prestations</h2>
+        <span class="gold-line"></span>
+        <p class="section-sub">Des séances adaptées à vos besoins et votre disponibilité</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <span class="service-icon">✨</span>
+          <h3 class="service-name heading">Guidance<br><span style="font-size:1.2rem; font-weight:400;">1 question / 1 réponse</span></h3>
+          <p class="service-dur">~15 minutes</p>
+          <p class="service-name-sub heading">Clarté & Confiance</p>
+          <div class="service-price">20<sup>€</sup></div>
+          <p class="service-desc">Parfois, une seule réponse suffit à débloquer une situation. Venez poser la question qui vous tient à cœur lors d'une séance de médiumnité. 15 minutes d'écoute et de canalisation pour retrouver votre chemin.</p>
+        </div>
+
+        <div class="service-card">
+          <span class="service-icon">🔮</span>
+          <h3 class="service-name heading">Médiumnité & Guidance Approfondie</h3>
+          <p class="service-desc">Parce que certaines étapes de vie demandent plus qu'une simple réponse rapide, je vous accompagne lors d'une séance sur-mesure. Nous prenons le temps de canaliser les messages, de comprendre la source de vos questionnements et de vous donner les clés pour avancer sereinement.</p>
+          <div class="price-tiers">
+            <div class="price-tier">
+              <span class="tier-label">Durée 1h</span>
+              <span class="tier-price">65 €</span>
+              <span class="tier-note">Un panorama complet de vos énergies et des messages du moment.</span>
+            </div>
+            <div class="price-tier">
+              <span class="tier-label">Durée 1h30</span>
+              <span class="tier-price">90 €</span>
+              <span class="tier-note">Une immersion totale, idéale pour les situations complexes ou pour un contact défunt profond.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <span class="service-icon">🌿</span>
+          <h3 class="service-name heading">Soin Énergétique & Magnétisme</h3>
+          <p class="service-name-sub heading">Retrouvez l'harmonie</p>
+          <p class="service-desc">Besoin de libérer les tensions, de recharger vos batteries ou d'apaiser des douleurs physiques et émotionnelles ? Ce soin permet de nettoyer vos énergies, de lever les blocages et de relancer la libre circulation de votre force vitale. Repartez le corps léger et l'esprit serein.</p>
+          <div class="price-tiers">
+            <div class="price-tier">
+              <span class="tier-label">Durée 1h</span>
+              <span class="tier-price">65 €</span>
+              <span class="tier-note">Idéal pour un rééquilibrage global et une profonde détente.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="service-card">
+          <span class="service-icon">☯️</span>
+          <h3 class="service-name heading">La Formule Duo : L'Esprit & le Corps</h3>
+          <p class="service-desc">Le combo parfait pour aligner vos pensées et vos énergies. Nous divisons la séance en deux temps : de la guidance pour éclairer votre chemin, puis un soin énergétique pour intégrer les messages dans le corps et libérer les tensions.</p>
+          <div class="price-tiers">
+            <div class="price-tier">
+              <span class="tier-label">Formule 1h</span>
+              <span class="tier-price">65 €</span>
+              <span class="tier-note">30 min Guidance + 30 min Soin</span>
+            </div>
+            <div class="price-tier">
+              <span class="tier-label">Formule 1h30</span>
+              <span class="tier-price">90 €</span>
+              <span class="tier-note">45 min Guidance + 45 min Soin</span>
+            </div>
+          </div>
+          <p class="service-desc" style="font-style:italic; font-size:.85rem;">Le bénéfice : Vous repartez avec des réponses claires dans la tête et un corps totalement ressourcé.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ─────────────────────────────────────────────────────── -->
+  <section id="avis" class="section" style="background: var(--navy);">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-tag" style="color:var(--gold-light);">Ils témoignent</p>
+        <h2 class="section-title heading" style="color:#fff;">Ce que disent mes clients</h2>
+        <span class="gold-line"></span>
+        <p class="section-sub" style="color:rgba(255,255,255,.55);">Des expériences vécues, partagées avec le cœur</p>
+      </div>
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">Aux Flo'ts d'Énergies porte très bien son nom. Florence reflète et diffuse l'énergie de bienveillance, l'énergie de la générosité, l'énergie de la simplicité, l'énergie de la discrétion, lesquelles, une fois mélangées, donnent l'énergie d'Amour, pour répondre à nos questions ou nous éclairer sur notre chemin lors d'une guidance médiumnique. Je recommande aussi l'atelier Confiance en soi et Estime de soi, très ludique mais qui fait un travail intérieur puissant.</p>
+          <p class="review-author">D.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">N'hésitez pas à contacter Florence. Vous serez surpris par ses prestations et par sa bienveillance et son écoute. 💫🙏😉 Moi en tout cas quand j'ai besoin je n'hésite pas !</p>
+          <p class="review-author">N.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">Florence est une belle personne, à l'écoute, attentive. Une enseignante formidable, qui sait partager et donner son enseignement de manière douce et ferme à la fois. Elle est très sensible et ressent nos émotions, les respecte, nous conseille tout en nous laissant notre libre arbitre. Je vous la recommande à 1000 %.</p>
+          <p class="review-author">K.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">Demandez à Florence un dessin par rapport à votre date de naissance et vous serez bluffé. Je vous assure que pour moi, tout est juste. Mon dessin est tellement beau que je l'ai encadré et il est dans ma chambre — il intégrera le décor de mon nouveau domicile. Florence est une vraie artiste, très connectée.</p>
+          <p class="review-author">K.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">J'ai eu la chance de rencontrer une Florence exceptionnelle ! Cette rencontre a été une véritable expérience enrichissante. Au-delà de ses compétences, Florence m'a également touché par sa bienveillance et son écoute attentive. Elle a su prendre le temps de me comprendre et de me prodiguer des soins et des conseils avisés. Je recommande vivement ses services pour toute personne à la recherche d'un équilibre intérieur et d'un mieux-être. Un grand merci 😚</p>
+          <p class="review-author">N.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">Je suis venu en tant qu'accompagnateur avec ma mère lors d'une réunion, et j'ai eu l'occasion de rencontrer quelqu'un de très sympathique et très avenant. L'ambiance était vraiment bien et les produits très intéressants.</p>
+          <p class="review-author">G.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">Merci Florence pour ce moment de bien-être. Je n'hésiterai pas à reprendre rendez-vous si besoin.</p>
+          <p class="review-author">V.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">Merci à Florence pour son professionnalisme et ses capacités de médiumnité impressionnantes. Florence est une guérisseuse de l'âme. Les différents soins réalisés ont été bénéfiques à mon bien-être. De plus, grâce à Florence, j'ai pu avancer sur ma médiumnité et réaliser une formation afin d'évoluer spirituellement. C'est une personne rayonnante, apaisante, à l'écoute, qui par ses soins m'a beaucoup apporté : bien-être, confiance en moi... N'hésitez pas à la contacter ! ✨️🥰</p>
+          <p class="review-author">I.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">Un immense merci du fond du cœur pour l'intention que tu m'as donnée pendant tous ces temps difficiles. Je voulais te remercier pour ton aide précieuse et tes excellents services. Ton dévouement m'a été d'une grande utilité et j'apprécie beaucoup ton soutien. Merci encore pour tout...</p>
+          <p class="review-author">N.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">J'aime beaucoup les échanges avec Florence. Elle est très à l'écoute de nos attentes et y répond franchement. Ses soins en fin de séance sont très bénéfiques — avec le métier que je fais, j'en ai besoin. Je ressors toujours calme et apaisé. Merci Florence d'être là.</p>
+          <p class="review-author">D.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">J'ai connu Florence grâce à ma sœur lors d'une séance avec un médium. Nous nous sommes revues pour des réunions chez elle, et mon ressenti s'est confirmé. C'est comme ça que j'ai fait une séance de guidance avec elle l'année dernière. J'ai eu face à moi une personne accueillante, professionnelle, bienveillante et à l'écoute. Cela m'a permis de prendre conscience de certaines choses et m'a fait travailler sur moi. Alors merci Florence.</p>
+          <p class="review-author">G.</p>
+        </div>
+
+        <div class="review-card">
+          <span class="review-quote">"</span>
+<p class="review-text">Aux Flo'ts d'Énergies vous met en confiance, va droit au but avec ses ressentis, une bienveillance avec ses mots pour soigner nos maux. Toujours à l'écoute de nos besoins, je recommande "Aux Flo'ts d'Énergies".</p>
+          <p class="review-author">J.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── BOOKING ─────────────────────────────────────────────────────────── -->
+  <section id="reservation" class="section" style="background: #fff;">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-tag">Prise de rendez-vous</p>
+        <h2 class="section-title heading">Réserver une séance</h2>
+        <span class="gold-line"></span>
+        <p class="section-sub">Contactez Florence directement par téléphone</p>
+      </div>
+
+      <div id="booking-app" style="text-align:center; padding:3rem 2rem; background:var(--cream); border-radius:20px; max-width:600px; margin:0 auto; box-shadow:0 10px 40px rgba(15,45,74,.07);">
+        <div style="font-size:3.5rem; margin-bottom:1.5rem;">📞</div>
+        <h3 class="heading" style="font-size:1.8rem; color:var(--navy); margin-bottom:1rem;">Prise de rendez-vous par téléphone</h3>
+        <p style="color:var(--text-light); font-size:1.05rem; line-height:1.8; margin-bottom:2rem;">
+          La réservation en ligne est temporairement suspendue.<br>
+          Pour prendre rendez-vous, contactez Florence directement :
+        </p>
+        <a href="tel:+33665581236" class="btn-gold" style="font-size:1.1rem; padding:1rem 2.5rem;">📞 06 65 58 12 36</a>
+        <p style="color:var(--text-light); font-size:.85rem; margin-top:1.5rem;">📞 Appel RDV : Lun–Ven, 9h–18h30 &nbsp;·&nbsp; Séances : Lun–Sam, 13h–20h</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ── CONTACT ─────────────────────────────────────────────────────────── -->
+  <section id="contact" class="section" style="background: var(--cream);">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-tag">Me contacter</p>
+        <h2 class="section-title heading">Informations de contact</h2>
+        <span class="gold-line"></span>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-icon">📞</div>
+          <h4 class="contact-name heading">Téléphone</h4>
+          <a href="tel:+33665581236" style="color:var(--teal); font-size:1.2rem; font-weight:700; text-decoration:none; letter-spacing:.04em;">06 65 58 12 36</a>
+          <p style="color:var(--text-light); font-size:.85rem; margin-top:.5rem;">Séances : Lun–Sam, 13h–20h</p>
+          <p style="color:var(--text-light); font-size:.85rem; margin-top:.2rem;">📞 Appel RDV : Lun–Ven, 9h–18h30</p>
+        </div>
+        <div class="contact-card">
+          <div class="contact-icon">📍</div>
+          <h4 class="contact-name heading">Cabinet</h4>
+          <p style="color:var(--text); line-height:1.7; font-size:.95rem;">
+            251 Route du Mazeau<br>
+            <strong>85490 Benet</strong>
+          </p>
+          <a href="https://www.google.fr/maps/search/251+Rte+du+Mazeau+85490+Benet" target="_blank" rel="noopener"
+            style="color:var(--teal); font-size:.83rem; text-decoration:none; margin-top:.5rem; display:inline-block;">
+            Voir sur Google Maps →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────────── -->
+  <footer>
+    <p class="footer-name heading">Aux Flo'ts d'Énergies</p>
+    <p style="margin-bottom:1rem;">© 2026 Florence Atangana — Médium · Magnétiseuse Énergéticienne</p>
+    <button class="btn-pro" onclick="openAdmin()">Espace professionnel</button>
+    <div class="footer-legal">
+      <a href="conditions.html">Conditions d'utilisation</a>
+      <span>·</span>
+      <a href="confidentialite.html">Politique de confidentialité</a>
+    </div>
+  </footer>
+
+  <!-- ── ADMIN OVERLAY ──────────────────────────────────────────────────── -->
+  <div id="admin-overlay" x-data="adminApp()">
+    <div class="admin-panel">
+
+      <!-- LOGIN -->
+      <div x-show="!loggedIn">
+        <div style="text-align:center; margin-bottom:2rem;">
+          <h2 class="admin-title heading">Espace professionnel</h2>
+          <p style="color:var(--text-light); font-size:.9rem; margin-top:.4rem;">
+            Connectez-vous pour gérer vos rendez-vous
+          </p>
+        </div>
+        <form @submit.prevent="login()" style="max-width:360px; margin:0 auto;">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input class="form-input" type="email" x-model="email" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input class="form-input" type="password" x-model="password" required autocomplete="current-password">
+          </div>
+          <div x-show="loginErr" class="alert alert-err" x-text="loginErr"></div>
+          <button type="submit" class="btn-gold" style="width:100%;" :disabled="logging">
+            <span x-show="!logging">Se connecter</span>
+            <span x-show="logging">Connexion…</span>
+          </button>
+        </form>
+        <div style="text-align:center; margin-top:1.5rem;">
+          <button class="btn-plain" onclick="closeAdmin()">Fermer</button>
+        </div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div x-show="loggedIn">
+        <div class="admin-header">
+          <h2 class="admin-title heading">Tableau de bord</h2>
+          <div class="admin-header-actions">
+            <button class="btn-plain" @click="logout()">Déconnexion</button>
+            <button class="btn-close" onclick="closeAdmin()">×</button>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab" :class="{ active: tab === 'rdv' }" @click="tab = 'rdv'; loadRdv()">📋 Rendez-vous</button>
+          <button class="tab" :class="{ active: tab === 'block' }" @click="tab = 'block'; loadBlocked()">🔒 Jours bloqués</button>
+        </div>
+
+        <!-- TAB RDV -->
+        <div x-show="tab === 'rdv'">
+          <div x-show="loading" class="empty-state"><div class="emoji">⟳</div>Chargement…</div>
+          <div x-show="!loading && rdvList.length === 0" class="empty-state">
+            <div class="emoji">📅</div>Aucun rendez-vous à venir.
+          </div>
+          <template x-for="a in rdvList" :key="a.id">
+            <div class="appt-row">
+              <div class="appt-client">
+                <div class="appt-client-name" x-text="a.client_name"></div>
+                <div class="appt-client-contact" x-text="a.client_email"></div>
+                <div class="appt-client-contact" x-text="a.client_phone || ''"></div>
+              </div>
+              <div class="appt-info">
+                <div class="appt-date" x-text="formatDate(a.appointment_date)"></div>
+                <div class="appt-details" x-text="a.appointment_time.substring(0,5) + ' · ' + svcLabel(a.service_type)"></div>
+                <div class="appt-price" x-text="(a.amount / 100) + ' €'"></div>
+              </div>
+              <div class="appt-actions">
+                <span class="badge" :class="'badge-' + a.status" x-text="statusLabel(a.status)"></span>
+                <template x-if="a.status !== 'cancelled'">
+                  <div>
+                    <button class="btn-refund" @click="startRefund(a.id)">Annuler et rembourser</button>
+                    <div x-show="confirmCancelId === a.id" class="refund-confirm">
+                      <p class="refund-confirm-label">Tapez <strong>Annuler et rembourser</strong> pour confirmer :</p>
+                      <input class="form-input" type="text" x-model="confirmCancelText" placeholder="Annuler et rembourser" style="margin:.4rem 0; font-size:.88rem; padding:.55rem .8rem;">
+                      <div style="display:flex; gap:.5rem; margin-top:.4rem;">
+                        <button class="btn-refund-confirm" :disabled="confirmCancelText !== 'Annuler et rembourser' || refunding" @click="doRefund(a.id)">
+                          <span x-show="!refunding">Confirmer</span><span x-show="refunding">En cours…</span>
+                        </button>
+                        <button class="btn-plain" style="font-size:.8rem;" @click="confirmCancelId = null; confirmCancelText = ''">Annuler</button>
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- TAB BLOCKED -->
+        <div x-show="tab === 'block'">
+          <h3 class="heading" style="font-size:1.4rem; color:var(--navy); margin-bottom:1.2rem;">Bloquer des jours</h3>
+          <div class="blocked-form">
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input class="form-input" type="date" x-model="newDate" :min="today()">
+            </div>
+            <div class="form-group" style="flex:2; min-width:180px;">
+              <label class="form-label">Motif (optionnel)</label>
+              <input class="form-input" type="text" x-model="newReason" placeholder="Vacances, formation…">
+            </div>
+            <button class="btn-gold" @click="addBlock()" :disabled="!newDate" style="padding:.85rem 1.4rem; white-space:nowrap;">
+              Bloquer ce jour
+            </button>
+          </div>
+
+          <div x-show="!loading && blockedList.length === 0" class="empty-state">
+            <div class="emoji">✅</div>Aucun jour bloqué.
+          </div>
+          <template x-for="b in blockedList" :key="b.id">
+            <div class="blocked-row">
+              <div>
+                <div class="blocked-row-date" x-text="formatDate(b.blocked_date)"></div>
+                <div class="blocked-row-reason" x-text="b.reason || 'Indisponible'"></div>
+              </div>
+              <button class="btn-unblock" @click="removeBlock(b.id)">Débloquer</button>
+            </div>
+          </template>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCRIPTS ─────────────────────────────────────────────────────────── -->
+  <script>
+    /* ── CONFIG ──────────────────────────────────────────────────────────── */
+    const SUPABASE_URL     = 'https://ykuohmwxyzakwatlljtb.supabase.co';
+    const SUPABASE_ANON    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrdW9obXd4eXpha3dhdGxsanRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNzEwNTYsImV4cCI6MjA5MDY0NzA1Nn0.AcyNMRnNQLmsiTHhjRq2ZaOSvrENJwE0Ke8fK5uSHHU';
+    const EDGE             = SUPABASE_URL + '/functions/v1';
+
+    const SB_DURATIONS = { '15min': 15, '1h': 60, '1h30': 90 };
+    const MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    const DAYS_FR   = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+    const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    /* ── NAVBAR SCROLL ───────────────────────────────────────────────────── */
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', scrollY > 60);
+    });
+
+    /* ── SUCCESS / CANCEL REDIRECT ───────────────────────────────────────── */
+    (function handleRedirect() {
+      const p = new URLSearchParams(location.search);
+      if (p.get('success') === 'true') {
+        showNotif('✅ Votre rendez-vous est confirmé ! Vous recevrez un email de confirmation.', 'ok');
+        history.replaceState({}, '', location.pathname);
+      } else if (p.get('cancelled') === 'true') {
+        showNotif("ℹ️ Le paiement a été annulé. Votre créneau n'a pas été réservé.", 'err');
+        history.replaceState({}, '', location.pathname);
+      }
+    })();
+
+    function showNotif(msg, type) {
+      const el = document.getElementById('notif');
+      el.textContent = msg;
+      el.className = 'alert alert-' + type;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 7000);
+    }
+
+    /* ── PARTICLES ───────────────────────────────────────────────────────── */
+    (function spawnParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 22; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = 1 + Math.random() * 3;
+        p.style.cssText = `
+          left:${Math.random()*100}%;
+          width:${size}px; height:${size}px;
+          animation-duration:${9 + Math.random()*12}s;
+          animation-delay:${Math.random()*12}s;
+        `;
+        container.appendChild(p);
+      }
+    })();
+
+    /* ── SCROLL-TO-BOOKING helper (called from services section) ────────── */
+    function scrollToBooking(type) {
+      document.getElementById('reservation').scrollIntoView({ behavior: 'smooth' });
+      document.dispatchEvent(new CustomEvent('booking:pick', { detail: type }));
+    }
+
+    /* ── ADMIN helpers ───────────────────────────────────────────────────── */
+    function openAdmin()  { document.getElementById('admin-overlay').style.display = 'flex'; }
+    function closeAdmin() { document.getElementById('admin-overlay').style.display = 'none'; }
+
+    /* ── BOOKING APP (Alpine) ────────────────────────────────────────────── */
+    function bookingApp() {
+      return {
+        step: 1,
+        selectedService: null,
+        selectedDate:    null,
+        selectedTime:    null,
+        form: { name: '', email: '', phone: '' },
+        calMonth: new Date().getMonth(),
+        calYear:  new Date().getFullYear(),
+        blockedDates: [],
+        slots: [],
+        loadingSlots: false,
+        paying: false,
+        payErr: null,
+
+        MONTHS: MONTHS_FR,
+
+        SERVICES: [
+          { type: '15min', label: 'Séance découverte', duration: '15 minutes', price: 40,  icon: '✨' },
+          { type: '1h',    label: 'Séance complète',   duration: '1 heure',    price: 70,  icon: '🌟' },
+          { type: '1h30',  label: 'Séance intensive',  duration: '1h30',       price: 100, icon: '💫' },
+        ],
+
+        async init() {
+          /* Load blocked dates for calendar */
+          const { data } = await sb.from('blocked_dates').select('blocked_date');
+          this.blockedDates = (data || []).map(d => d.blocked_date);
+
+          /* Listen for external service pre-selection (from services section) */
+          document.addEventListener('booking:pick', e => this.chooseService(e.detail));
+        },
+
+        chooseService(type) {
+          this.selectedService = type;
+          this.selectedDate    = null;
+          this.selectedTime    = null;
+          this.step = 2;
+        },
+
+        prevMonth() {
+          if (this.calMonth === 0) { this.calMonth = 11; this.calYear--; }
+          else this.calMonth--;
+        },
+        nextMonth() {
+          if (this.calMonth === 11) { this.calMonth = 0; this.calYear++; }
+          else this.calMonth++;
+        },
+
+        calDays() {
+          const today    = new Date(); today.setHours(0,0,0,0);
+          const firstDay = new Date(this.calYear, this.calMonth, 1);
+          const offset   = (firstDay.getDay() + 6) % 7; // Monday = 0
+          const total    = new Date(this.calYear, this.calMonth + 1, 0).getDate();
+          const days     = [];
+
+          for (let i = 0; i < offset; i++) days.push({ empty: true, key: 'e' + i });
+
+          for (let d = 1; d <= total; d++) {
+            const date = new Date(this.calYear, this.calMonth, d);
+            const ds   = `${this.calYear}-${String(this.calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            days.push({
+              n: d, ds, key: ds, empty: false,
+              isToday:  date.getTime() === today.getTime(),
+              disabled: date < today || date.getDay() === 0 || this.blockedDates.includes(ds),
+            });
+          }
+          return days;
+        },
+
+        async pickDate(ds) {
+          this.selectedDate = ds;
+          this.selectedTime = null;
+          this.step = 3;
+          this.loadingSlots = true;
+          this.slots = [];
+
+          const { data: booked } = await sb
+            .from('appointments')
+            .select('appointment_time, service_type')
+            .eq('appointment_date', ds)
+            .neq('status', 'cancelled');
+
+          const dur = SB_DURATIONS[this.selectedService];
+          this.slots = this._buildSlots(dur, booked || []);
+          this.loadingSlots = false;
+        },
+
+        _buildSlots(dur, booked) {
+          const slots = [];
+          for (let t = 13*60; t + dur <= 20*60; t += 15) {
+            const end = t + dur;
+            const ok  = !booked.some(b => {
+              const bs = this._toMin(b.appointment_time);
+              const be = bs + SB_DURATIONS[b.service_type];
+              return t < be && end > bs;
+            });
+            if (ok) {
+              const h = String(Math.floor(t/60)).padStart(2,'0');
+              const m = String(t%60).padStart(2,'0');
+              slots.push(`${h}:${m}`);
+            }
+          }
+          return slots;
+        },
+
+        _toMin(t) { const [h,m] = t.split(':').map(Number); return h*60+m; },
+
+        pickTime(t) { this.selectedTime = t; this.step = 4; },
+
+        async pay() {
+          if (!this.form.name || !this.form.email) return;
+          this.paying = true; this.payErr = null;
+          try {
+            const r = await fetch(`${EDGE}/create-checkout`, {
+              method:  'POST',
+              headers: { 'Content-Type': 'application/json', 'apikey': SUPABASE_ANON },
+              body: JSON.stringify({
+                service_type:      this.selectedService,
+                appointment_date:  this.selectedDate,
+                appointment_time:  this.selectedTime + ':00',
+                client_name:       this.form.name,
+                client_email:      this.form.email,
+                client_phone:      this.form.phone,
+              }),
+            });
+            const d = await r.json();
+            if (!r.ok) throw new Error(d.error || 'Erreur inattendue');
+            location.href = d.url;
+          } catch (e) {
+            this.payErr = e.message;
+            this.paying = false;
+          }
+        },
+
+        formatDate(ds) {
+          if (!ds) return '';
+          const d = new Date(ds + 'T00:00:00');
+          return `${DAYS_FR[d.getDay()]} ${d.getDate()} ${MONTHS_FR[d.getMonth()].toLowerCase()} ${d.getFullYear()}`;
+        },
+      };
+    }
+
+    /* ── ADMIN APP (Alpine) ──────────────────────────────────────────────── */
+    function adminApp() {
+      return {
+        loggedIn: false,
+        email: '', password: '',
+        loginErr: null, logging: false,
+        tab: 'rdv',
+        rdvList: [], blockedList: [],
+        loading: false,
+        newDate: '', newReason: '',
+        confirmCancelId: null,
+        confirmCancelText: '',
+        refunding: false,
+
+        async init() {
+          const { data: { session } } = await sb.auth.getSession();
+          if (session) { this.loggedIn = true; this.loadRdv(); }
+        },
+
+        async login() {
+          this.logging = true; this.loginErr = null;
+          const { error } = await sb.auth.signInWithPassword({ email: this.email, password: this.password });
+          this.logging = false;
+          if (error) { this.loginErr = 'Email ou mot de passe incorrect.'; }
+          else { this.loggedIn = true; this.loadRdv(); }
+        },
+
+        async logout() {
+          await sb.auth.signOut();
+          this.loggedIn = false; this.email = ''; this.password = '';
+          closeAdmin();
+        },
+
+        async loadRdv() {
+          this.loading = true;
+          const today = new Date().toISOString().split('T')[0];
+          const { data } = await sb.from('appointments').select('*')
+            .gte('appointment_date', today)
+            .order('appointment_date').order('appointment_time');
+          this.rdvList = data || [];
+          this.loading = false;
+        },
+
+        startRefund(id) {
+          this.confirmCancelId = id;
+          this.confirmCancelText = '';
+        },
+
+        async doRefund(id) {
+          this.refunding = true;
+          try {
+            const { data: { session } } = await sb.auth.getSession();
+            const r = await fetch(`${EDGE}/cancel-refund`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${session.access_token}`,
+                'apikey': SUPABASE_ANON,
+              },
+              body: JSON.stringify({ appointment_id: id }),
+            });
+            const d = await r.json();
+            if (!r.ok) throw new Error(d.error || 'Erreur inattendue');
+            this.confirmCancelId = null;
+            this.confirmCancelText = '';
+            this.loadRdv();
+          } catch (e) {
+            alert('Erreur : ' + e.message);
+          } finally {
+            this.refunding = false;
+          }
+        },
+
+        async loadBlocked() {
+          this.loading = true;
+          const { data } = await sb.from('blocked_dates').select('*').order('blocked_date');
+          this.blockedList = data || [];
+          this.loading = false;
+        },
+
+        async addBlock() {
+          if (!this.newDate) return;
+          const { error } = await sb.from('blocked_dates').insert({
+            blocked_date: this.newDate,
+            reason: this.newReason || null,
+          });
+          if (!error) { this.newDate = ''; this.newReason = ''; this.loadBlocked(); }
+          else alert('Erreur : ce jour est peut-être déjà bloqué.');
+        },
+
+        async removeBlock(id) {
+          await sb.from('blocked_dates').delete().eq('id', id);
+          this.loadBlocked();
+        },
+
+        today() { return new Date().toISOString().split('T')[0]; },
+
+        formatDate(ds) {
+          if (!ds) return '';
+          const d = new Date(ds + 'T00:00:00');
+          return `${DAYS_FR[d.getDay()]} ${d.getDate()} ${MONTHS_FR[d.getMonth()].toLowerCase()} ${d.getFullYear()}`;
+        },
+
+        svcLabel(t)     { return { '15min':'15 min','1h':'1 heure','1h30':'1h30' }[t] || t; },
+        statusLabel(s)  { return { confirmed:'Confirmé', pending:'En attente', cancelled:'Annulé' }[s] || s; },
+      };
+    }
+  </script>
+</body>
+</html>
